@@ -15,13 +15,13 @@ import java.util.Map;
 @Component
 public class Client {
 
-    public static void sendFiles(Integer index, List<String> files) {
+    public static void sendFiles(List<String> files, Integer index, String stream) {
         Map<String, Object> payload = new HashMap<String, Object>();
         payload.put("files", files);
         payload.put("index", index);
         Gson gson = new Gson();
         String json = gson.toJson(payload);
-        String response = sendJson("http://localhost:8080/", json);
+        String response = sendJson("http://localhost:8080/" + stream, json);
         System.out.println(response);
     }
 
