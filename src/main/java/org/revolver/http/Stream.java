@@ -74,8 +74,7 @@ public class Stream {
         new Thread(() -> {
             try {
                 FFmpegBuilder builder = getBuilder(files, index, stream);
-                FFmpegExecutor executor = getExecutor();
-                executor.createJob(builder, progress -> {
+                getExecutor().createJob(builder, progress -> {
                     if (progress.status == Progress.Status.END) {
                         Stream.next(files, index, stream).start();
                     }
