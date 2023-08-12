@@ -12,9 +12,7 @@ import java.io.File;
 import java.util.List;
 
 public class Stream {
-    
-    private static FFmpeg FFMPEG;
-    private static FFprobe FFPROBE;
+    static FFmpegExecutor EXECUTOR;
 
     public enum Type {
         MUSIC,
@@ -27,11 +25,13 @@ public class Stream {
 
     public static FFmpegExecutor getExecutor() {
         try {
-            if (FFMPEG == null || FFPROBE == null) {
-                FFMPEG = new FFmpeg("/opt/homebrew/bin/ffmpeg");
-                FFPROBE = new FFprobe("/opt/homebrew/bin/ffprobe");
+            if (EXECUTOR == null) {
+                FFmpeg ffmpeg = new FFmpeg("/opt/homebrew/bin/ffmpeg");
+                FFprobe ffprobe = new FFprobe("/opt/homebrew/bin/ffprobe");
+                EXECUTOR = new FFmpegExecutor(ffmpeg, ffprobe);
             }
-            return new FFmpegExecutor(FFMPEG, FFPROBE);
+
+            return EXECUTOR;
         } catch (Exception e) {
             e.printStackTrace();
         }
